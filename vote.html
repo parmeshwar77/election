@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content=
+  "width=device-width, initial-scale=1.0">
+  <title>Digital Dummy Election Voting</title>
+  <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f8f8;
+
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            
+        }
+        .main-title {
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 8px;
+            background-color: #ffffff;
+            color: #000000;
+            border-bottom: 1px solid #ddd;
+        }
+        .instructions {
+            background-color: #2c80ff;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-size: 14px;
+        }
+        .header {
+            background-color: #ee4b2b;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 18px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #ffffff;
+        }
+        th, td {
+           
+            border: 1px solid #ddd;
+            text-align: center;
+            font-size: 8px;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .candidate-row {
+            background-color: #dda285;
+            color: white;
+            font-weight: bold;
+        }
+        .symbol-column {
+            width: 40px; /* Reducing the width of the Election Symbol column */
+        }
+        .button-column {
+            width: 40px; /* Reducing the width of the Election Symbol column */
+        }
+        .symbol-img {
+            width: 48px;
+            height: auto;
+        }
+        .candidate-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 4px;
+        }
+        .buttoncan {
+            background-color: #304FFE;
+            color: white;
+            padding: 5px 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+            font-weight: bold;
+            font-size: 8px;
+            width: 100%;
+            display: block;
+            margin: 10px 0;
+        }
+        .button {
+            background-color: #304FFE;
+            color: white;
+            padding: 5px 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+            font-weight: bold;
+            height: 20px;
+            font-size: 8px;
+            width: 100%;
+            display: block;
+            margin: 10px 0;
+        }
+        .buttoncan:hover {
+            background-color: #1e40ff;
+        }
+        .bulb-img {
+            width: 20px;
+            height: auto;
+        }
+        .whatsapp-btn {
+            background-color: #25D366;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+            font-weight: bold;
+            width: 100%;
+            display: block;
+            margin: 10px 0;
+            text-align: center;
+            transition: transform 0.2s ease, box-shadow 0.2s ease; /* Smooth hover effect */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Adds depth */
+    animation: pulse 1.5s infinite; /* Attention-grabbing pulse */
+        }
+        .whatsapp-btn:hover {
+            background-color: #128C7E;
+           
+        }
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #f4f4f4;
+            color: #333;
+            font-size: 14px;
+            border-top: 1px solid #ddd;
+            margin-top: 20px;
+        }
+        .footer-left, .footer-center, .footer-right {
+            flex: 1;
+            text-align: center;
+        }
+        .footer-left {
+            text-align: left;
+        }
+        .footer-right {
+            text-align: right;
+        }
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: flex-start;
+            z-index: 1000;
+        }
+
+        /* Animated image styling */
+        #animated-image {
+            position: absolute;
+            top: -100px; /* Starts above the screen */
+            animation: slideDown 4s forwards; /* Animates down */
+        }
+
+        /* Slide down animation */
+        @keyframes slideDown {
+            from { top: -100px; }
+            to { top: 20%; } /* Ends near the center of the screen */
+        }
+  #special-button {
+    background: linear-gradient(45deg, #304FFE, #1e40ff);
+    color: white;
+    padding: 12px 24px; /* Slightly larger for emphasis */
+    border-radius: 8px;
+    cursor: pointer;
+    border: none;
+    font-weight: bold;
+    font-size: 16px;
+    width: 100%;
+    display: block;
+    margin: 10px 0;
+    transition: transform 0.2s ease, box-shadow 0.2s ease; /* Smooth hover effect */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Adds depth */
+    animation: pulse 1.5s infinite; /* Attention-grabbing pulse */
+  }
+
+  #special-button:hover {
+    background: linear-gradient(45deg, #1e40ff, #304FFE);
+    transform: scale(1.05); /* Slight enlargement on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4); /* Enhanced shadow on hover */
+  }
+  .button-gif {
+    width: 24px; /* Set width of the GIF */
+    height: 24px; /* Set height of the GIF */
+    margin-right: 10px; /* Space between GIF and text */
+  }
+
+
+  @keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+  }
+
+  @media (max-width: 600px) {
+    #special-button {
+        padding: 8px 16px; /* Adjusted for smaller screens */
+        font-size: 14px;
+    }
+    .button-gif {
+        width: 20px;
+        height: 20px;
+    }
+  }
+
+        
+  </style>
+</head>
+<body>
+
+   
+  <div class="container">
+    <div class="main-title">
+    नवी मुंबई महानगर पालिका निवडणूक २०२५<br>
+    ई - डिजिटल बॅलेट डेमो मतदान यंत्र
+    </div><button id="special-button" onclick=
+    "playSound()"><img src=
+    "./assets/hand-casting-vote-vector.jpg" alt="GIF" class=
+    "button-gif"> डेमोच्या अधिक माहितीसाठी इथे क्लिक करा</button>
+    <div class="header">
+      मतदानाच्या दिवशी सुद्धा बॅट या चिन्हा समोरील निळे बटण दाबावे
+    </div><!-- WhatsApp Share Button -->
+    <a href=
+    "https://wa.me/?text=%E0%A4%A8%E0%A4%AE%E0%A4%B8%E0%A5%8D%E0%A4%95%E0%A4%BE%E0%A4%B0,%0A%0A%E0%A4%87%20-%20%E0%A4%A1%E0%A4%BF%E0%A4%9C%E0%A4%BF%E0%A4%9F%E0%A4%B2%20%E0%A4%AC%E0%A5%85%E0%A4%B2%E0%A5%87%E0%A4%9F%20%E0%A4%A1%E0%A5%87%E0%A4%AE%E0%A5%8B%20%E0%A4%AE%E0%A4%A4%E0%A4%A6%E0%A4%BE%E0%A4%A8%20%E0%A4%95%E0%A4%B0%E0%A4%A3%E0%A5%8D%E0%A4%AF%E0%A4%BE%E0%A4%B8%E0%A4%BE%E0%A4%A0%E0%A5%80%20%E0%A4%B2%E0%A4%BF%E0%A4%82%E0%A4%95%E0%A4%B5%E0%A4%B0%20%E0%A4%95%E0%A5%8D%E0%A4%B2%E0%A4%BF%E0%A4%95%20%E0%A4%95%E0%A4%B0%E0%A4%BE.%0A%0Awww.myvote.cloud/parmeshwarg%0A%0A%E0%A4%B6%E0%A5%8D%E0%A4%B0%E0%A5%80.%20%E0%A4%AA%E0%A4%B0%E0%A4%AE%E0%A5%87%E0%A4%B6%E0%A5%8D%E0%A4%B5%E0%A4%B0%20%E0%A4%AE%E0%A4%B0%E0%A4%BF%E0%A4%AC%E0%A4%BE%20%E0%A4%98%E0%A5%8B%E0%A4%B0%E0%A4%AA%E0%A4%A1%E0%A5%87.%0A%0A%E0%A4%B2%E0%A5%8B%E0%A4%95%E0%A4%B6%E0%A4%BE%E0%A4%B9%E0%A5%80%20%E0%A4%AA%E0%A4%95%E0%A5%8D%E0%A4%B7%0A%E0%A4%A8%E0%A4%B5%E0%A5%80%20%E0%A4%AE%E0%A5%81%E0%A4%82%E0%A4%AC%E0%A4%88%20%E0%A4%AE%E0%A4%B9%E0%A4%BE%E0%A4%A8%E0%A4%97%E0%A4%B0%20%E0%A4%AA%E0%A4%BE%E0%A4%B2%E0%A4%BF%E0%A4%95%E0%A4%BE%20%E0%A4%A8%E0%A4%BF%E0%A4%B5%E0%A4%A1%E0%A4%A3%E0%A5%82%E0%A4%95%202025"
+    class="whatsapp-btn" target="_blank">Share on WhatsApp   <img src=
+    "./assets/WhatsApp.png" alt="GIF" class=
+    "button-gif"></a>
+    <table>
+      <thead>
+        <tr>
+          <th>S.No</th>
+          <th>Name of Candidate</th>
+          <th>Election Symbol</th>
+          <th>Bulb</th>
+          <th>Button</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>
+            <table style="width: 100%; border: none;">
+              <tr>
+                <td style="text-align: left; border: none;">
+                <!-- Empty cell for Name --></td>
+                <td style="text-align: right; border: none;">
+                <!-- Empty cell for Candidate Image --></td>
+              </tr>
+            </table>
+          </td>
+          <th class="symbol-column">
+          <!-- Empty cell for Symbol Image --></th>
+          <td><img class="bulb-img" src=
+          "./assets/dimbutton.jpeg" alt=
+          "Bulb" id="bulb-1"></td>
+          <td></td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>
+              <table style="width: 100%; border: none;">
+                <tr>
+                  <td style="text-align: left; border: none;">
+                  <!-- Empty cell for Name --></td>
+                  <td style="text-align: right; border: none;">
+                  <!-- Empty cell for Candidate Image --></td>
+                </tr>
+              </table>
+            </td>
+            <th class="symbol-column">
+            <!-- Empty cell for Symbol Image --></th>
+            <td><img class="bulb-img" src=
+            "./assets/dimbutton.jpeg" alt=
+            "Bulb" id="bulb-1"></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>
+              <table style="width: 100%; border: none;">
+                <tr>
+                  <td style="text-align: left; border: none;">
+                  <!-- Empty cell for Name --></td>
+                  <td style="text-align: right; border: none;">
+                  <!-- Empty cell for Candidate Image --></td>
+                </tr>
+              </table>
+            </td>
+            <th class="symbol-column">
+            <!-- Empty cell for Symbol Image --></th>
+            <td><img class="bulb-img" src=
+            "./assets/dimbutton.jpeg" alt=
+            "Bulb" id="bulb-1"></td>
+            <td></td>
+          </tr>
+        <tr class="candidate-row">
+          <td style="font-size: 16px;">4</td>
+          <td>
+            <table style="width: 100%; border: none;">
+                <tr>
+                  <td style="
+                    text-align: left;
+                    font-size: 14px;
+                    background-color: #dda285;
+                    border: none;
+                  ">
+                    श्री.परमेश्वर मारिबा घोरपडे
+                  </td>
+                  <td style="
+                    text-align: right;
+                    border: none;
+                    background-color: #dda285;
+                  ">
+                    <img class="candidate-img" src="./assets/candidate.jpeg" alt="Candidate Image">
+                  </td>
+                </tr>
+              </table>
+              
+          </td>
+          <td class="symbol-column"><img class="symbol-img" src=
+          "./assets/logo.jpeg" alt=
+          "Symbol"></td>
+          <td><img class="bulb-img" src="./assets/dimbutton.jpeg"alt=
+          "Bulb" id="bulb-0"></td>
+          <td class="button-column">
+    <button id="special-button"
+        class="buttoncan" 
+        onclick="changeBulbImage(0)">
+        बटन दाबा
+    </button>
+</td>
+       
+        </tr>
+        <tr>
+          <td></td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>
+            <table style="width: 100%; border: none;">
+              <tr>
+                <td style="text-align: left; border: none;">
+                <!-- Empty cell for Name --></td>
+                <td style="text-align: right; border: none;">
+                <!-- Empty cell for Candidate Image --></td>
+              </tr>
+            </table>
+          </td>
+          <th class="symbol-column">
+          <!-- Empty cell for Symbol Image --></th>
+          <td><img class="bulb-img" src=
+          "./assets/dimbutton.jpeg" alt=
+          "Bulb" id="bulb-1"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td>
+            <table style="width: 100%; border: none;">
+              <tr>
+                <td style="text-align: left; border: none;">
+                <!-- Empty cell for Name --></td>
+                <td style="text-align: right; border: none;">
+                <!-- Empty cell for Candidate Image --></td>
+              </tr>
+            </table>
+          </td>
+          <th class="symbol-column">
+          <!-- Empty cell for Symbol Image --></th>
+          <td><img class="bulb-img" src=
+          "./assets/dimbutton.jpeg" alt=
+          "Bulb" id="bulb-1"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td>
+            <table style="width: 100%; border: none;">
+              <tr>
+                <td style="text-align: left; border: none;">
+                <!-- Empty cell for Name --></td>
+                <td style="text-align: right; border: none;">
+                <!-- Empty cell for Candidate Image --></td>
+              </tr>
+            </table>
+          </td>
+          <th class="symbol-column">
+          <!-- Empty cell for Symbol Image --></th>
+          <td><img class="bulb-img" src=
+          "./assets/dimbutton.jpeg" alt=
+          "Bulb" id="bulb-1"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td>
+            <table style="width: 100%; border: none;">
+              <tr>
+                <td style="text-align: left; border: none;">
+                <!-- Empty cell for Name --></td>
+                <td style="text-align: right; border: none;">
+                <!-- Empty cell for Candidate Image --></td>
+              </tr>
+            </table>
+          </td>
+          <th class="symbol-column">
+          <!-- Empty cell for Symbol Image --></th>
+          <td><img class="bulb-img" src=
+          "./assets/dimbutton.jpeg" alt=
+          "Bulb" id="bulb-1"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>9</td>
+          <td>
+            <table style="width: 100%; border: none;">
+              <tr>
+                <td style="text-align: left; border: none;">
+                <!-- Empty cell for Name --></td>
+                <td style="text-align: right; border: none;">
+                <!-- Empty cell for Candidate Image --></td>
+              </tr>
+            </table>
+          </td>
+          <th class="symbol-column">
+          <!-- Empty cell for Symbol Image --></th>
+          <td><img class="bulb-img" src=
+          "./assets/dimbutton.jpeg" alt=
+          "Bulb" id="bulb-1"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>10</td>
+          <td>
+            <table style="width: 100%; border: none;">
+              <tr>
+                <td style="text-align: left; border: none;">
+                <!-- Empty cell for Name --></td>
+                <td style="text-align: right; border: none;">
+                <!-- Empty cell for Candidate Image --></td>
+              </tr>
+            </table>
+          </td>
+          <th class="symbol-column">
+          <!-- Empty cell for Symbol Image --></th>
+          <td><img class="bulb-img" src=
+          "./assets/dimbutton.jpeg" alt=
+          "Bulb" id="bulb-1"></td>
+          <td></td>
+        </tr>
+        
+        <tr>
+          <td>11</td>
+          <td>
+            <table style="width: 100%; border: none;">
+              <tr>
+                <td style="text-align: left; border: none;">
+                <!-- Empty cell for Name --></td>
+                <td style="text-align: right; border: none;">
+                <!-- Empty cell for Candidate Image --></td>
+              </tr>
+            </table>
+          </td>
+          <th class="symbol-column">
+          <!-- Empty cell for Symbol Image --></th>
+          <td><img class="bulb-img" src=
+          "./assets/dimbutton.jpeg" alt=
+          "Bulb" id="bulb-1"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>12</td>
+          <td>
+            <table style="width: 100%; border: none;">
+              <tr>
+                <td style="text-align: left; border: none;">
+                <!-- Empty cell for Name --></td>
+                <td style="text-align: right; border: none;">
+                <!-- Empty cell for Candidate Image --></td>
+              </tr>
+            </table>
+          </td>
+          <th class="symbol-column">
+          <!-- Empty cell for Symbol Image --></th>
+          <td><img class="bulb-img" src=
+          "./assets/dimbutton.jpeg" alt=
+          "Bulb" id="bulb-1"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>13</td>
+          <td>
+            <table style="width: 100%; border: none;">
+              <tr>
+                <td style="text-align: left; border: none;">
+                <!-- Empty cell for Name --></td>
+                <td style="text-align: right; border: none;">
+                <!-- Empty cell for Candidate Image --></td>
+              </tr>
+            </table>
+          </td>
+          <th class="symbol-column">
+          <!-- Empty cell for Symbol Image --></th>
+          <td><img class="bulb-img" src=
+          "./assets/dimbutton.jpeg" alt=
+          "Bulb" id="bulb-1"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>14</td>
+          <td>
+            <table style="width: 100%; border: none;">
+              <tr>
+                <td style="text-align: left; border: none;">
+                <!-- Empty cell for Name --></td>
+                <td style="text-align: right; border: none;">
+                <!-- Empty cell for Candidate Image --></td>
+              </tr>
+            </table>
+          </td>
+          <th class="symbol-column">
+          <!-- Empty cell for Symbol Image --></th>
+          <td><img class="bulb-img" src=
+          "./assets/dimbutton.jpeg" alt=
+          "Bulb" id="bulb-1"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>15</td>
+          <td>
+            <table style="width: 100%; border: none;">
+              <tr>
+                <td style="text-align: left; border: none;">
+                <!-- Empty cell for Name --></td>
+                <td style="text-align: right; border: none;">
+                <!-- Empty cell for Candidate Image --></td>
+              </tr>
+            </table>
+          </td>
+          <th class="symbol-column">
+          <!-- Empty cell for Symbol Image --></th>
+          <td><img class="bulb-img" src=
+          "./assets/dimbutton.jpeg" alt=
+          "Bulb" id="bulb-1"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>16</td>
+          <td>
+            <table style="width: 100%; border: none;">
+              <tr>
+                <td style=
+                "text-align: left; border: none; font-size: 15px;">
+                NOTA</td>
+                <td style="text-align: right; border: none;">
+                <!-- Empty cell for Candidate Image --></td>
+              </tr>
+            </table>
+          </td>
+          <th class="symbol-column">
+          <!-- Empty cell for Symbol Image --></th>
+          <td><img class="bulb-img" src=
+          "./assets/dimbutton.jpeg" alt=
+          "Bulb" id="bulb-1"></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table><!-- Footer -->
+    <div class="footer">
+      <span class="footer-center">Mr. Parmeshwar Ghorpade, Maharashtra<br>
+      +91 84213 14884</span>
+    </div>  
+    
+  </div><!-- Close container div -->
+  <div id="view-count" style="font-size: 15px; margin-top: 10px; text-align: center;">
+    Views: <span id="count">0</span>
+</div>
+  <div id="overlay" onclick="hideOverlay()"><img id=
+  "animated-image" src="./assets/ballotslip.jpeg"
+  alt="Animated Image"></div>
+  <audio id="beep-sound">
+    <source src="./assets/beep.mpeg" type="audio/mpeg">
+</audio>
+<audio id="vote-sound">
+    <source src="./assets/votedone.mpeg" type="audio/mpeg">
+</audio>
+<audio id="donevote-sound">
+    <source src="./assets/donevote.mpeg" type="audio/mpeg">
+</audio>
+<audio id="demovote-sound">
+    <source src="./assets/demovote.mpeg" type="audio/mpeg">
+</audio>
+
+  <script>
+        // Create an Audio object for the sound effect
+        var beep = new Audio('./assets/beep.mpeg'); // Replace with your sound URL
+        var demo = new Audio('https://www.vsampark.com/images/demo161.mp3');
+        var donevoting = new Audio('./assets/donevote.mpeg');
+        var error = new Audio('https://www.vsampark.com/images/error.mp3');
+
+        function showOverlay() {
+            var overlay = document.getElementById('overlay');
+            overlay.style.display = 'flex';  // Show the overlay
+
+            // Hide the overlay after 3 seconds
+            setTimeout(hideOverlay, 8000);
+        }
+
+        // Function to hide the overlay
+        function hideOverlay() {
+            var overlay = document.getElementById('overlay');
+            overlay.style.display = 'none'; // Hide the overlay
+        }
+
+
+        // Function to change bulb image for a few seconds and play the sound
+        function changeBulbImage(rowId) 
+        {
+    // Play the sound
+    var beepSound = document.getElementById('beep-sound');
+    var donevoteSound = document.getElementById('donevote-sound');
+
+    // Play the first sound
+    beepSound.play();
+
+    // After the first sound ends, play the second sound
+    beepSound.onended = function() {
+        donevoteSound.play();
+    };
+
+
+    // Get the bulb image element for the given row
+    var bulbElement = document.getElementById('bulb-' + rowId);
+
+    // Store the original bulb image src
+    var originalSrc = bulbElement.src;
+
+    // Change the bulb image to a different one
+    bulbElement.src = "./assets/bulbred.png"; // Use relative path and add extension
+
+    // Revert back to the original image after 2 seconds
+    setTimeout(function() {
+        bulbElement.src = originalSrc;
+    }, 8000); // 2000 milliseconds = 2 seconds
+
+    setTimeout(showOverlay, 2000);
+}
+
+
+        function errorbeep() {
+            error.play();
+        }
+
+        // Function to play sound when the "Press the blue button in front of the man blowing the trumpet for voting" button is clicked
+        function playSound() {
+
+            var demovote = document.getElementById('demovote-sound');
+
+    // Play the first sound
+    demovote.play();
+        }
+
+        // Function to update view count
+function updateViewCount() {
+    // Get the current count from localStorage or set to 0 if not available
+    let count = localStorage.getItem('viewCount') ? parseInt(localStorage.getItem('viewCount')) : 0;
+    
+    // Increment the count
+    count++;
+
+    // Save the updated count back to localStorage
+    localStorage.setItem('viewCount', count);
+
+    // Update the count on the page
+    document.getElementById('count').textContent = count;
+}
+
+// Run the updateViewCount function when the page loads
+window.onload = function() {
+    updateViewCount();
+
+    // Play demo vote sound
+    var demoVoteSound = document.getElementById('demo-vote-sound');
+    demoVoteSound.play().catch(function(error) {
+        console.log('Audio autoplay blocked:', error);
+    });
+};
+
+
+  </script>
+</body>
+</html>
